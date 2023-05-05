@@ -7,15 +7,6 @@ import { getDayOfTheWeek } from "../utils/GetDayOfTheWeek"
 
 export default class QueueGenerateReportController {
 	public static load() {
-		// let isRun: boolean = true
-
-		// schedule.scheduleJob(EnvVariable.WATCH_DOG_TIME, () => {
-		// 	if (!isRun) {
-		// 		isRun = false
-		// 		console.error("Process timeout")
-		// 		process.exit(-1)
-		// 	}
-		// })
 
 		const queueGenerateReportRepository = new QueueGenerateReportRepository(
 			EnvVariable.URL,

@@ -1,8 +1,11 @@
 {
-	"name": "ms-generate-report",
+	"name": "report-scheduler",
 	"version": "1.0.0",
 	"main": "index.js",
 	"license": "MIT",
+	"author": {
+		"name": "Cristhoffer Santos"
+	},
 	"scripts": {
 		"dev": "ts-node-dev src/index.ts"
 	},
