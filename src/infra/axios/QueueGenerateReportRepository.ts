@@ -92,20 +92,20 @@ export class QueueGenerateReportRepository
 	}
 	async sendEmail(): Promise<void> {
 		const transport = nodemailer.createTransport({
-			host: "sandbox.smtp.mailtrap.io",
-			port: 2525,
+			host: EnvVariable.MAIL_HOST,
+			port: <number>EnvVariable.MAIL_PORT,
 			auth: {
-				user: "b481538ec0ca7a",
-				pass: "a815d2ded0f480",
+				user: EnvVariable.MAIL_USER,
+				pass: EnvVariable.MAIL_PASS,
 			},
 		})
 
 		transport.sendMail({
-			from: "noreplay@mail.com",
-			to: "cristhoffer.santos@jbq.global",
-			subject: "Test message",
-			html: "<p> Sendind test </p>",
-			text: "Sendind test",
+			from: EnvVariable.MAIL_FROM,
+			to: EnvVariable.MAIL_TO,
+			subject: EnvVariable.MAIL_SUBJECT,
+			html: EnvVariable.MAIL_HTML,
+			text: EnvVariable.MAIL_TEXT,
 			attachments: [
 				{
 					filename: "Leo80CouponReport.xlsx",

@@ -11,4 +11,13 @@ export default {
 	SAP_URL: process.env.SAP_URL,
 	CC_REPORT_REFRESH_TIME: process.env.CC_REPORT_REFRESH_TIME || "*/5 * * * *",
 	CC_ORDERS_LAST_TIME: process.env.CC_ORDERS_LAST_TIME || "86400000",
+	MAIL_HOST: process.env.MAIL_HOST || "sandbox.smtp.mailtrap.io",
+	MAIL_PORT: process.env.MAIL_PORT || 2525,
+    MAIL_USER: process.env.MAIL_USER || "b481538ec0ca7a",
+    MAIL_PASS: process.env.MAIL_PASS || "a815d2ded0f480",
+    MAIL_FROM: process.env.MAIL_FROM || "test_from@email.com",
+	MAIL_TO: process.env.MAIL_TO || "test_to@email.com",
+	MAIL_HTML: process.env.MAIL_HTML || "<p>Test mail html",
+	MAIL_TEXT: process.env.MAIL_TEXT || "Test mail text",
+    MAIL_SUBJECT: process.env.MAIL_SUBJECT || "Test Mail Subject",
 }
