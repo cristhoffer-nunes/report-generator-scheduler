@@ -65,7 +65,7 @@ export class QueueGenerateReportRepository
 		const { data } = await axios.get(
 			`${
 				this.url
-			}/ccapp/v1/orders?queryFormat=SCIM&fields=submittedDate,id,commerceItems.priceInfo.orderDiscountInfos,Pedido_SAP&q=submittedDate gt "2023-03-01T03:00:00.000Z" and submittedDate lt "${lastDate.toJSON()}"&offset=${offset}`,
+			}/ccapp/v1/orders?queryFormat=SCIM&fields=submittedDate,id,commerceItems.priceInfo.orderDiscountInfos,Pedido_SAP,clientDocument&q=submittedDate gt "2023-03-01T03:00:00.000Z" and submittedDate lt "${lastDate.toJSON()}"&offset=${offset}`,
 			{
 				headers: {
 					Authorization: `Bearer ${await this.getCurrentToken()}`,

@@ -2,7 +2,13 @@ import dotenv from "dotenv"
 dotenv.config()
 
 export default {
-	PORT: process.env.TZ || 3000,
+	NODE_ENV: process.env.NODE_ENV || "development",
+	PORT: process.env.PORT || 3000,
+	LOG_IN_FILE: process.env.LOG_IN_FILE || "development, test",
+	LOG_LEVEL: process.env.LOG_LEVEL || "info",
+	APPLICATIONINSIGHTS_CONNECTION_STRING:
+		process.env.APPLICATIONINSIGHTS_CONNECTION_STRING ||
+		"16a2c168-5e2c-413d-9ad1-bd43bf778e57",
 	URL:
 		process.env.URL || "https://p1595626c1dev-store.occa.ocs.oraclecloud.com",
 	APP_KEY:
@@ -13,11 +19,11 @@ export default {
 	CC_ORDERS_LAST_TIME: process.env.CC_ORDERS_LAST_TIME || "86400000",
 	MAIL_HOST: process.env.MAIL_HOST || "sandbox.smtp.mailtrap.io",
 	MAIL_PORT: process.env.MAIL_PORT || 2525,
-    MAIL_USER: process.env.MAIL_USER || "b481538ec0ca7a",
-    MAIL_PASS: process.env.MAIL_PASS || "a815d2ded0f480",
-    MAIL_FROM: process.env.MAIL_FROM || "test_from@email.com",
+	MAIL_USER: process.env.MAIL_USER || "b481538ec0ca7a",
+	MAIL_PASS: process.env.MAIL_PASS || "a815d2ded0f480",
+	MAIL_FROM: process.env.MAIL_FROM || "test_from@email.com",
 	MAIL_TO: process.env.MAIL_TO || "test_to@email.com",
 	MAIL_HTML: process.env.MAIL_HTML || "<p>Test mail html",
 	MAIL_TEXT: process.env.MAIL_TEXT || "Test mail text",
-    MAIL_SUBJECT: process.env.MAIL_SUBJECT || "Test Mail Subject",
+	MAIL_SUBJECT: process.env.MAIL_SUBJECT || "Test Mail Subject",
 }

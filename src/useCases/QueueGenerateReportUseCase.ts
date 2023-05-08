@@ -1,3 +1,4 @@
+import logger from "../config/Logger"
 import { IReportDTO } from "../dtos/IReportDTO"
 import { QueueGenerateReportRepository } from "../infra/axios/QueueGenerateReportRepository"
 
@@ -23,11 +24,6 @@ export class QueueGenerateReportUseCase {
 		}
 
 		for (let i = 0; i < executions; i++) {
-			console.log({
-				executions: i,
-				offset: offset,
-			})
-
 			const { items } = await this.queueGenerateReportRepository.getOrders({
 				offset,
 			})
@@ -60,8 +56,12 @@ export class QueueGenerateReportUseCase {
 
 			offset = offset + 250
 		}
-
+		logger.info("GENERATE REPORT - START")
 		await this.queueGenerateReportRepository.generateReport(report)
+		logger.info("GENERATE REPORT - SUCCESS")
+
+		logger.info("SEND EMAIL - START")
 		await this.queueGenerateReportRepository.sendEmail()
+		logger.info("SEND EMAIL - SUCCESS")
 	}
 }
