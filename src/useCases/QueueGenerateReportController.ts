@@ -18,7 +18,7 @@ export default class QueueGenerateReportController {
 			queueGenerateReportRepository
 		)
 
-		let scheduleReportLoop = 3
+		let scheduleReportLoop = 0
 
 		schedule.scheduleJob(EnvVariable.CC_REPORT_REFRESH_TIME, async () => {
 			try {
