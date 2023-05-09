@@ -2,11 +2,11 @@ import axios from "axios"
 import xlsx from "xlsx"
 import nodemailer from "nodemailer"
 import EnvVariable from "../../config/EnvVariable"
-import { Orders } from "infra/entities/Orders"
+import { Orders } from "../../infra/entities/Orders"
 import { IGetOrdersDTO } from "../../dtos/iGetOrdersDTO"
 import { IReportDTO } from "../../dtos/IReportDTO"
-import { IQueueGenerateReportRepository } from "repositories/IQueueGenerateReportRepository"
-import { OCCToken } from "infra/entities/Token"
+import { IQueueGenerateReportRepository } from "../../repositories/IQueueGenerateReportRepository"
+import { OCCToken } from "../../infra/entities/Token"
 
 export class QueueGenerateReportRepository
 	implements IQueueGenerateReportRepository

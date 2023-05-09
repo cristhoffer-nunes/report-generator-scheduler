@@ -7,7 +7,7 @@
 		"module": "commonjs",
 		"baseUrl": "./",
 		"resolveJsonModule": true,
-		"outDir": "dist",
+		"outDir": "./dist",
 		"esModuleInterop": true,
 		"forceConsistentCasingInFileNames": true,
 
