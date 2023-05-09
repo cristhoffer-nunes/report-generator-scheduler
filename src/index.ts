@@ -46,6 +46,6 @@ if (EnvVariables.APPLICATIONINSIGHTS_CONNECTION_STRING) {
 }
 
 app.listen(EnvVariables.PORT, () => {
-	console.log(`START APLICATION - PORT: ${EnvVariables.PORT}`)
+	logger.info(`START APLICATION - PORT: ${EnvVariables.PORT}`)
 	QueueGenerateReportController.load()
 })
