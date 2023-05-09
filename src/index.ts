@@ -27,6 +27,7 @@ app.get("/test", (re, res) => {
 })
 
 if (EnvVariables.APPLICATIONINSIGHTS_CONNECTION_STRING) {
+	logger.warn("APPINSIGHTS START")
 	setup(EnvVariables.APPLICATIONINSIGHTS_CONNECTION_STRING)
 		.setAutoCollectRequests(true)
 		.setAutoCollectPerformance(true, true)
@@ -43,6 +44,8 @@ if (EnvVariables.APPLICATIONINSIGHTS_CONNECTION_STRING) {
 	defaultClient.context.tags[
 		defaultClient.context.keys.cloudRole
 	] = `${EnvVariables.NODE_ENV}-UTILS-SCHEDULE-REPORT`
+} else {
+	logger.warn("APPINSIGHTS STOPPED - NO APPINSIGHTS_IKEY")
 }
 
 app.listen(EnvVariables.PORT, () => {
