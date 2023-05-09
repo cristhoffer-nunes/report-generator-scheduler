@@ -4,7 +4,7 @@ dotenv.config()
 export default {
 	NODE_ENV: process.env.NODE_ENV || "development",
 	PORT: process.env.PORT || 3000,
-	LOG_IN_FILE: process.env.LOG_IN_FILE || "development, test",
+	LOG_IN_FILE: process.env.LOG_IN_FILE || "development, test, production",
 	LOG_LEVEL: process.env.LOG_LEVEL || "info",
 	APPLICATIONINSIGHTS_CONNECTION_STRING:
 		process.env.APPLICATIONINSIGHTS_CONNECTION_STRING ||

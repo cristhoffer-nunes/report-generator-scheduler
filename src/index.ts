@@ -1,5 +1,10 @@
 import express from "express"
-import { ApplicationInsights } from "@microsoft/applicationinsights-web"
+import {
+	setup,
+	start,
+	DistributedTracingModes,
+	defaultClient,
+} from "applicationInsights"
 import QueueGenerateReportController from "./useCases/QueueGenerateReportController"
 import logger from "./config/Logger"
 import EnvVariables from "./config/EnvVariable"
@@ -20,6 +25,25 @@ app.get("/test", (re, res) => {
 		})
 	}
 })
+
+if (EnvVariables.APPLICATIONINSIGHTS_CONNECTION_STRING) {
+	setup(EnvVariables.APPLICATIONINSIGHTS_CONNECTION_STRING)
+		.setAutoCollectRequests(true)
+		.setAutoCollectPerformance(true, true)
+		.setAutoCollectExceptions(true)
+		.setAutoCollectDependencies(true)
+		.setAutoCollectConsole(true, true)
+		.setAutoDependencyCorrelation(true)
+		.setUseDiskRetryCaching(true)
+		.setSendLiveMetrics(false)
+		.setDistributedTracingMode(DistributedTracingModes.AI)
+
+	start()
+
+	defaultClient.context.tags[
+		defaultClient.context.keys.cloudRole
+	] = `${EnvVariables.NODE_ENV}-UTILS-SCHEDULE-REPORT`
+}
 
 app.listen(EnvVariables.PORT, () => {
 	console.log(`START APLICATION - PORT: ${EnvVariables.PORT}`)
