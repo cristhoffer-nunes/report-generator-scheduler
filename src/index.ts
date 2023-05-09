@@ -2,9 +2,9 @@ import express from "express"
 import {
 	setup,
 	start,
-	DistributedTracingModes,
 	defaultClient,
-} from "applicationInsights"
+	DistributedTracingModes,
+} from "applicationinsights"
 import QueueGenerateReportController from "./useCases/QueueGenerateReportController"
 import logger from "./config/Logger"
 import EnvVariables from "./config/EnvVariable"
