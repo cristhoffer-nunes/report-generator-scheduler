@@ -33,7 +33,7 @@ if (EnvVariables.APPLICATIONINSIGHTS_CONNECTION_STRING) {
 
 	defaultClient.context.tags[
 		defaultClient.context.keys.cloudRole
-	] = `${EnvVariables.TAG}-UTILS-SCHEDULE-REPORT`
+	] = `${EnvVariables.TAG}-UTILS-REPORT-SCHEDULER`
 } else {
 	logger.warn("APPINSIGHTS STOPPED - NO APPINSIGHTS_IKEY")
 }
