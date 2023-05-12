@@ -23,32 +23,23 @@ export default class QueueGenerateReportController {
 		schedule.scheduleJob(EnvVariable.CC_REPORT_REFRESH_TIME, async () => {
 			try {
 				const day = getDayOfTheWeek(new Date().getDay())
-
-				switch (day) {
-					case "Domingo":
-						logger.info("REPORT IS NOT GERENATED ON SUNDAYS")
-						break
-					case "Segunda-feira":
-						logger.info(`SCHEDULE REPORT START - CURRENT DAY: ${day}`)
-						await queueGenerateReportUseCase.execute()
-						break
-					case "Terça-feira":
-						logger.info("REPORT IS NOT GERENATED ON TUESDAYS")
-						break
-					case "Quarta-feira":
-						logger.info(`SCHEDULE REPORT START - CURRENT DAY: ${day}`)
-						await queueGenerateReportUseCase.execute()
-						break
-					case "Quinta-feira":
-						logger.info("REPORT IS NOT GERENATED ON THURSDAYS")
-						break
-					case "Sexta-feira":
-						logger.info(`SCHEDULE REPORT START - CURRENT DAY: ${day}`)
-						await queueGenerateReportUseCase.execute()
-						break
-					case "Sabado":
-						logger.info("REPORT IS NOT GERENATED ON SATURDAYS")
-						break
+				if (day.includes("Domingo")) {
+					logger.info("REPORT IS NOT GERENATED ON SUNDAYS")
+				} else if (day.includes("Segunda-feira")) {
+					logger.info(`SCHEDULE REPORT START - CURRENT DAY: ${day}`)
+					await queueGenerateReportUseCase.execute()
+				} else if (day.includes("Terça-feira")) {
+					logger.info("REPORT IS NOT GERENATED ON TUESDAYS")
+				} else if (day.includes("Quarta-feira")) {
+					logger.info(`SCHEDULE REPORT START - CURRENT DAY: ${day}`)
+					await queueGenerateReportUseCase.execute()
+				} else if (day.includes("Quinta-feira")) {
+					logger.info("REPORT IS NOT GERENATED ON THURSDAYS")
+				} else if (day.includes("Sexta-feira")) {
+					logger.info(`SCHEDULE REPORT START - CURRENT DAY: ${day}`)
+					await queueGenerateReportUseCase.execute()
+				} else if (day.includes("Sabado")) {
+					logger.info("REPORT IS NOT GERENATED ON SATURDAYS")
 				}
 			} catch (err) {
 				if (err instanceof AxiosError && err.response) {
