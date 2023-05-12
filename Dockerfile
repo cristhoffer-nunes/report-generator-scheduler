@@ -33,6 +33,6 @@ RUN yarn install
 COPY --from=builder /home/node/dist/ ./dist/
 
 # Expose application port
-EXPOSE 3000
+EXPOSE ${PORT}
 # Start application
 CMD ["yarn", "start"]
