@@ -23,7 +23,15 @@ export class QueueGenerateReportUseCase {
 			executions = Math.ceil(totalResults / limit)
 		}
 
+		logger.info(
+			`NECESSARY EXECUTIONS: ${executions - 1} - NECESSARY OFFSET: ${
+				(executions - 1) * limit
+			}`
+		)
+
 		for (let i = 0; i < executions; i++) {
+			logger.info(`EXECUTION: ${i} - OFFSET: ${offset}`)
+
 			const { items } = await this.queueGenerateReportRepository.getOrders({
 				offset,
 			})
