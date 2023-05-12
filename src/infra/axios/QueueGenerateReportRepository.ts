@@ -60,7 +60,7 @@ export class QueueGenerateReportRepository
 		}
 	}
 	async getOrders({ offset = 0 }: IGetOrdersDTO): Promise<Orders> {
-		const lastDate = new Date(Date.now() - <any>EnvVariable.CC_ORDERS_LAST_TIME)
+		const lastDate = new Date()
 
 		const { data } = await axios.get(
 			`${
