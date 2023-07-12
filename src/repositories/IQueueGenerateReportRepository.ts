@@ -1,4 +1,4 @@
-import { IGetOrdersDTO } from "../dtos/iGetOrdersDTO"
+import { IGetOrdersDTO } from "../dtos/IGetOrdersDTO"
 import { IReportDTO } from "../dtos/IReportDTO"
 import { Orders } from "../infra/entities/Orders"
 import { OCCToken } from "../infra/entities/Token"

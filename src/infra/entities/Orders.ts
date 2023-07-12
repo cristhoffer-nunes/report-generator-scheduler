@@ -36,6 +36,25 @@ export class Orders {
 				}
 			]
 			client_document: string
+			priceInfo: {
+				secondaryCurrencyTaxAmount: number
+				discounted: boolean
+				secondaryCurrencyShippingAmount: number
+				amount: number
+				secondaryCurrencyTotal: number
+				manualAdjustmentTotal: number
+				discountAmount: number
+				tax: number
+				rawSubtotal: number
+				total: number
+				shipping: number
+				primaryCurrencyTotal: number
+				amountIsFinal: boolean
+				orderTotalBySite: {
+					siteUS: number
+				}
+				currencyCode: string
+			}
 		}
 	]
 }

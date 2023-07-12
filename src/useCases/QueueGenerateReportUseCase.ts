@@ -40,18 +40,28 @@ export class QueueGenerateReportUseCase {
 				order.commerceItems.forEach((product) => {
 					product.priceInfo.orderDiscountInfos.forEach((item) => {
 						if (item.couponCodes.length > 0) {
-							const includes = item.couponCodes[0].includes("LEO80")
-							if (includes) {
+							const includes = item.couponCodes.filter((couponCode) =>
+								couponCode.startsWith("CB")
+							)
+							if (includes.length != 0) {
 								const filtro = report.filter(
 									(reportObject) => reportObject.order_occ === order.id
 								)
 
 								if (filtro.length == 0) {
+									console.log({
+										order: order.id,
+										document: order.client_document,
+									})
 									let payload: IReportDTO = {
-										order_occ: order.id,
-										order_sap: order.Pedido_SAP,
-										coupon: item.couponCodes[0],
-										client_document: order.client_document,
+										Pedido_OCC: order.id,
+										Pedido_SAP: order.Pedido_SAP,
+										Cupom: item.couponCodes[0],
+										CPF_CNPJ: order.client_document,
+										Valor_descontado: order.priceInfo.discountAmount,
+										Valor_com_frete: order.priceInfo.total,
+										Subtotal_com_frete:
+											order.priceInfo.rawSubtotal + order.priceInfo.shipping,
 									}
 
 									report.push(payload)

@@ -1,6 +1,9 @@
 export interface IReportDTO {
-	order_occ: string
-	order_sap: string | null
-	coupon: string
-	client_document: string
+	Pedido_OCC: string
+	Pedido_SAP: string
+	Cupom: string
+	CPF_CNPJ: string
+	Valor_descontado: number
+	Subtotal_com_frete: number
+	Valor_com_frete: number
 }

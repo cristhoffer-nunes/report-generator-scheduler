@@ -3,7 +3,7 @@ import xlsx from "xlsx"
 import nodemailer from "nodemailer"
 import EnvVariable from "../../config/EnvVariable"
 import { Orders } from "../../infra/entities/Orders"
-import { IGetOrdersDTO } from "../../dtos/iGetOrdersDTO"
+import { IGetOrdersDTO } from "../../dtos/IGetOrdersDTO"
 import { IReportDTO } from "../../dtos/IReportDTO"
 import { IQueueGenerateReportRepository } from "../../repositories/IQueueGenerateReportRepository"
 import { OCCToken } from "../../infra/entities/Token"
@@ -93,7 +93,7 @@ export class QueueGenerateReportRepository
 	async sendEmail(): Promise<void> {
 		const transport = nodemailer.createTransport({
 			host: EnvVariable.MAIL_HOST,
-			port: <number>EnvVariable.MAIL_PORT,
+			port: Number(EnvVariable.MAIL_PORT),
 			auth: {
 				user: EnvVariable.MAIL_USER,
 				pass: EnvVariable.MAIL_PASS,
