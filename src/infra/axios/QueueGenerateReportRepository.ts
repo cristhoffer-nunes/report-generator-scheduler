@@ -85,7 +85,7 @@ export class QueueGenerateReportRepository
 		xlsx.write(workbook, { bookType: "xlsx", type: "buffer" })
 		xlsx.write(workbook, { bookType: "xlsx", type: "binary" })
 
-		xlsx.writeFile(workbook, "Leo80CouponReport.xlsx")
+		xlsx.writeFile(workbook, "CBCouponReport.xlsx")
 	}
 	async sendEmail(): Promise<void> {
 		const transport = nodemailer.createTransport({
@@ -105,9 +105,9 @@ export class QueueGenerateReportRepository
 			text: EnvVariable.MAIL_TEXT,
 			attachments: [
 				{
-					filename: "Leo80CouponReport.xlsx",
-					path: process.cwd() + "/Leo80CouponReport.xlsx",
-					cid: "uniq-Leo80CouponReport.xlsx",
+					filename: "CBCouponReport.xlsx",
+					path: process.cwd() + "/CBCouponReport.xlsx",
+					cid: "uniq-CBCouponReport.xlsx",
 				},
 			],
 		})
