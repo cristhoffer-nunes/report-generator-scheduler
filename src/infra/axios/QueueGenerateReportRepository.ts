@@ -7,6 +7,7 @@ import { IGetOrdersDTO } from "../../dtos/IGetOrdersDTO"
 import { IReportDTO } from "../../dtos/IReportDTO"
 import { IQueueGenerateReportRepository } from "../../repositories/IQueueGenerateReportRepository"
 import { OCCToken } from "../../infra/entities/Token"
+import { DateInformations } from "../../utils/DateInformations"
 
 export class QueueGenerateReportRepository
 	implements IQueueGenerateReportRepository
@@ -60,12 +61,10 @@ export class QueueGenerateReportRepository
 		}
 	}
 	async getOrders({ offset = 0 }: IGetOrdersDTO): Promise<Orders> {
-		const lastDate = new Date()
+		const date = DateInformations()
 
 		const { data } = await axios.get(
-			`${
-				this.url
-			}/ccapp/v1/orders?queryFormat=SCIM&fields=submittedDate,id,commerceItems.priceInfo.orderDiscountInfos,Pedido_SAP,clientDocument&q=submittedDate gt "2023-03-01T03:00:00.000Z" and submittedDate lt "${lastDate.toJSON()}"&offset=${offset}`,
+			`${this.url}/ccapp/v1/orders?queryFormat=SCIM&fields=submittedDate,id,commerceItems.priceInfo.orderDiscountInfos,Pedido_SAP,client_document,priceInfo&q=submittedDate gt "2023-06-01T03:00:00.000Z" and submittedDate lt "${date}T03:00:00.000Z"&offset=${offset}`,
 			{
 				headers: {
 					Authorization: `Bearer ${await this.getCurrentToken()}`,
@@ -76,14 +75,12 @@ export class QueueGenerateReportRepository
 		return data
 	}
 	async generateReport(reportDTO: IReportDTO[]): Promise<void> {
-		const date = new Date()
-		const day = date.getDate().toString().padStart(2, "0")
-		const month = (date.getMonth() + 1).toString().padStart(2, "0")
-		const year = date.getFullYear()
+		const date = DateInformations()
+
 		const worksheet = xlsx.utils.json_to_sheet(reportDTO)
 		const workbook = xlsx.utils.book_new()
 
-		xlsx.utils.book_append_sheet(workbook, worksheet, `${day}_${month}_${year}`)
+		xlsx.utils.book_append_sheet(workbook, worksheet, `${date}`)
 
 		xlsx.write(workbook, { bookType: "xlsx", type: "buffer" })
 		xlsx.write(workbook, { bookType: "xlsx", type: "binary" })
