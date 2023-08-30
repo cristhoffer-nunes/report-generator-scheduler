@@ -85,7 +85,7 @@ export class ReportRepository
 		xlsx.write(workbook, { bookType: "xlsx", type: "buffer" })
 		xlsx.write(workbook, { bookType: "xlsx", type: "binary" })
 
-		xlsx.writeFile(workbook, `relatorio-geral-de-cupons-${this.date}.xlsx`)
+		xlsx.writeFile(workbook, `files/relatorio-geral-de-cupons-${this.date}.xlsx`)
 	}
 	async sendEmail(): Promise<void> {
 		const transport = nodemailer.createTransport({
@@ -106,7 +106,7 @@ export class ReportRepository
 			attachments: [
 				{
 					filename: `relatorio-geral-de-cupons-${this.date}.xlsx`,
-					path: process.cwd() + `/relatorio-geral-de-cupons-${this.date}.xlsx`,
+					path: process.cwd() + `/files/relatorio-geral-de-cupons-${this.date}.xlsx`,
 					cid: `uniq-relatorio-geral-de-cupons-${this.date}.xlsx`,
 				},
 			],
