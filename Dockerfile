@@ -27,8 +27,5 @@ WORKDIR /app
 # Instale as dependências usando Yarn
 RUN yarn install
 
-# Execute o processo de build
-RUN yarn build
-
 # Inicie o aplicativo
-CMD ["yarn", "start"]
+CMD ["yarn","dev"]
