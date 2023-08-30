@@ -27,5 +27,7 @@ WORKDIR /app
 # Instale as dependências usando Yarn
 RUN yarn install
 
+EXPOSE 3000
+
 # Inicie o aplicativo
 CMD ["yarn","dev"]
