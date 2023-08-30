@@ -9,4 +9,5 @@ export interface IReportRepository {
 	getGeralOrders({ offset }: IGetOrdersDTO): Promise<Orders>
 	generateReport(reportDTO: IReportDTO[]): Promise<void>
 	sendEmail(): Promise<void>
+	deleteFiles(): void
 }

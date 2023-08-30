@@ -85,5 +85,8 @@ export class GeralReportUseCase {
 		logger.info("SEND EMAIL - START")
 		await this.reportRepository.sendEmail()
 		logger.info("SEND EMAIL - SUCCESS")
+
+		logger.info("DELETING FILES - START")
+		this.reportRepository.deleteFiles()
 	}
 }
