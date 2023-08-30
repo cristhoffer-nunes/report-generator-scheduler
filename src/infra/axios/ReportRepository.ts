@@ -2,15 +2,15 @@ import axios from "axios"
 import xlsx from "xlsx"
 import nodemailer from "nodemailer"
 import EnvVariable from "../../config/EnvVariable"
-import { Orders } from "../../infra/entities/Orders"
-import { IGetOrdersDTO } from "../../dtos/IGetOrdersDTO"
+import { Orders } from "../entities/Orders"
 import { IReportDTO } from "../../dtos/IReportDTO"
-import { IQueueGenerateReportRepository } from "../../repositories/IQueueGenerateReportRepository"
-import { OCCToken } from "../../infra/entities/Token"
+import { OCCToken } from "../entities/Token"
 import { DateInformations } from "../../utils/DateInformations"
+import { IReportRepository } from "../../repositories/IReportRepository"
+import { IGetOrdersDTO } from "../../dtos/IGetOrdersDTO"
 
-export class QueueGenerateReportRepository
-	implements IQueueGenerateReportRepository
+export class ReportRepository
+	implements IReportRepository
 {
 	protected occToken = {
 		access_token: "",
@@ -22,10 +22,12 @@ export class QueueGenerateReportRepository
 
 	protected url: string
 	protected appKey: string
+	protected date: string
 
-	constructor(url: string, appKey: string) {
-		this.url = url
-		this.appKey = appKey
+	constructor(){
+		this.url = EnvVariable.URL
+		this.appKey = EnvVariable.APP_KEY
+		this.date = DateInformations()
 	}
 
 	async getCurrentToken(): Promise<string> {
@@ -60,11 +62,10 @@ export class QueueGenerateReportRepository
 			return data
 		}
 	}
-	async getOrders({ offset = 0 }: IGetOrdersDTO): Promise<Orders> {
-		const date = DateInformations()
-
+	async getGeralOrders({ offset = 0 }: IGetOrdersDTO): Promise<Orders> {
+		
 		const { data } = await axios.get(
-			`${this.url}/ccapp/v1/orders?queryFormat=SCIM&fields=submittedDate,id,commerceItems.priceInfo.orderDiscountInfos,Pedido_SAP,client_document,priceInfo&q=submittedDate gt "2023-06-01T03:00:00.000Z" and submittedDate lt "${date}T03:00:00.000Z"&offset=${offset}`,
+			`${this.url}/ccapp/v1/orders?queryFormat=SCIM&fields=submittedDate,id,commerceItems.priceInfo.orderDiscountInfos,Pedido_SAP,client_document,priceInfo&q=submittedDate gt "2023-01-01T03:00:00.000Z" and submittedDate lt "${this.date}T03:00:00.000Z"&offset=${offset}`,
 			{
 				headers: {
 					Authorization: `Bearer ${await this.getCurrentToken()}`,
@@ -75,17 +76,16 @@ export class QueueGenerateReportRepository
 		return data
 	}
 	async generateReport(reportDTO: IReportDTO[]): Promise<void> {
-		const date = DateInformations()
 
 		const worksheet = xlsx.utils.json_to_sheet(reportDTO)
 		const workbook = xlsx.utils.book_new()
 
-		xlsx.utils.book_append_sheet(workbook, worksheet, `${date}`)
+		xlsx.utils.book_append_sheet(workbook, worksheet, `${this.date}`)
 
 		xlsx.write(workbook, { bookType: "xlsx", type: "buffer" })
 		xlsx.write(workbook, { bookType: "xlsx", type: "binary" })
 
-		xlsx.writeFile(workbook, "CBCouponReport.xlsx")
+		xlsx.writeFile(workbook, `relatorio-geral-de-cupons-${this.date}.xlsx`)
 	}
 	async sendEmail(): Promise<void> {
 		const transport = nodemailer.createTransport({
@@ -97,17 +97,17 @@ export class QueueGenerateReportRepository
 			},
 		})
 
-		transport.sendMail({
+		await transport.sendMail({
 			from: EnvVariable.MAIL_FROM,
 			to: EnvVariable.MAIL_TO,
-			subject: EnvVariable.MAIL_SUBJECT,
-			html: EnvVariable.MAIL_HTML,
-			text: EnvVariable.MAIL_TEXT,
+			subject: `Suporte | Leo Madeiras | Relatório geral de cupons - ${this.date}`,
+			html: `<p> Bom dia prezados, </p> Segue em anexo relatório geral de cupons para ser encaminhado através do chamado 13133362. </p> <p> Atenciosamente, </p>`,
+			text: `Bom dia prezados, Segue em anexo relatório geral de cupons para ser encaminhado através do chamado 13133362. Atenciosamente,`,
 			attachments: [
 				{
-					filename: "CBCouponReport.xlsx",
-					path: process.cwd() + "/CBCouponReport.xlsx",
-					cid: "uniq-CBCouponReport.xlsx",
+					filename: `relatorio-geral-de-cupons-${this.date}.xlsx`,
+					path: process.cwd() + `/relatorio-geral-de-cupons-${this.date}.xlsx`,
+					cid: `uniq-relatorio-geral-de-cupons-${this.date}.xlsx`,
 				},
 			],
 		})
