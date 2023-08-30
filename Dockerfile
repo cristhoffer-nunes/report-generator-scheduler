@@ -1,7 +1,8 @@
-# Use a imagem base desejada
+
+# Use a desired base image
 FROM node:latest
 
-# Define as variáveis de ambiente
+# Define the environment variables
 ENV NODE_ENV $NODE_ENV
 ENV TAG $TAG
 ENV PORT $PORT
@@ -15,17 +16,20 @@ ENV MAIL_HOST $MAIL_HOST
 ENV MAIL_PORT $MAIL_PORT
 ENV MAIL_USER $MAIL_USER
 ENV MAIL_PASS $MAIL_PASS
-ENV MAIL_TO $MAIL_TO
-ENV MAIL_FROM $MAIL_FROM
+ENV MAILENV MAIL $MAIL_FROM
 
-# Copie o código-fonte da aplicação
+#_TO $ Copy_FROM source theMAIL_TO application
+ code
 COPY . /app
 
-# Defina o diretório de trabalho
+ Set the# working directory
 WORKDIR /app
 
-# Instale as dependências usando Yarn
-RUN yarn install
+# Install the dependencies using yarn
+RUN yarn
 
-# Inicie o aplicativo
+ install#pose the application port Ex (tcpEX)
+POSE $PORT
+
+# Start the application
 CMD ["yarn","dev"]
