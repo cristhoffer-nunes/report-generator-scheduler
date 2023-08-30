@@ -1,3 +1,3 @@
 export interface IGetOrdersDTO {
-	offset?: number
+  offset?: number
 }
