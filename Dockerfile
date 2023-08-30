@@ -1,38 +1,34 @@
-# Building layer
-FROM node:18.7.0@sha256:2eef0e2d04ac0aaa5d7cefbc24a137c42c925d9dffa5a2568cda7618a1378976 AS builder
+# Use a imagem base desejada
+FROM node:latest
 
-WORKDIR /home/node
+# Define as variáveis de ambiente
+ENV NODE_ENV $NODE_ENV
+ENV TAG $TAG
+ENV PORT $PORT
+ENV LOG_IN_FILE $LOG_IN_FILE
+ENV LOG_LEVEL $LOG_LEVEL
+ENV APPLICATIONINSIGHTS_CONNECTION_STRING $APPLICATIONINSIGHTS_CONNECTION_STRING
+ENV URL $URL
+ENV APP_KEY $APP_KEY
+ENV CC_REPORT_REFRESH_TIME $CC_REPORT_REFRESH_TIME
+ENV MAIL_HOST $MAIL_HOST
+ENV MAIL_PORT $MAIL_PORT
+ENV MAIL_USER $MAIL_USER
+ENV MAIL_PASS $MAIL_PASS
+ENV MAIL_TO $MAIL_TO
+ENV MAIL_FROM $MAIL_FROM
 
-# Copy configuration files
-COPY tsconfig*.json ./
-COPY package*.json ./
+# Copie o código-fonte da aplicação
+COPY . /app
 
-# Install dependencies from package-lock.json, see https://docs.npmjs.com/cli/v7/commands/npm-ci
+# Defina o diretório de trabalho
+WORKDIR /app
+
+# Instale as dependências usando Yarn
 RUN yarn install
 
-# Copy application sources (.ts, .tsx, js)
-COPY src/ src/
-
-# Build application (produces dist/ folder)
+# Execute o processo de build
 RUN yarn build
 
-# Runtime (production) layer
-FROM node:18.7.0-alpine3.15@sha256:3b3c0f40c15171d184c76462b1c5a5c851b7527b90c0f4c84db9e591e2578b0a as production
-
-RUN apk add --no-cache curl
-
-WORKDIR /home/node
-
-# Copy dependencies files
-COPY package*.json ./
-
-# Install runtime dependecies (without dev/test dependecies)
-RUN yarn install
-
-# Copy production build
-COPY --from=builder /home/node/dist/ ./dist/
-
-# Expose application port
-EXPOSE ${PORT}
-# Start application
+# Inicie o aplicativo
 CMD ["yarn", "start"]
