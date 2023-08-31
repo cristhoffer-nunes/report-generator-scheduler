@@ -131,7 +131,7 @@ export class ReportRepository implements IReportRepository {
           if (err) {
             console.error(`Erro ao deletar o arquivo ${file}:`, err)
           } else {
-            console.log(`Arquivo ${file} foi deletado com sucesso.`)
+            logger.info(`Arquivo ${file} foi deletado com sucesso.`)
           }
         })
       })
