@@ -5,11 +5,11 @@ import EnvVariable from "../../config/EnvVariable"
 import fs from "fs"
 import path from "path"
 import { Orders } from "../entities/Orders"
-import { IReportDTO } from "../../dtos/IReportDTO"
+import { IReportDTO,IGetOrdersDTO } from "../../dtos"
 import { OCCToken } from "../entities/Token"
 import { DateInformations } from "../../utils/DateInformations"
 import { IReportRepository } from "../../repositories/IReportRepository"
-import { IGetOrdersDTO } from "../../dtos/IGetOrdersDTO"
+
 
 export class ReportRepository implements IReportRepository {
   protected occToken = {
