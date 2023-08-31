@@ -10,8 +10,8 @@ import {
 import logger from "./config/Logger"
 import EnvVariables from "./config/EnvVariable"
 
-console.log(`NODE_ENV: ${EnvVariables.NODE_ENV}`)
-console.log(`ENV_VARIABLES: ${JSON.stringify(EnvVariables)}`)
+logger.info(`NODE_ENV: ${EnvVariables.NODE_ENV}`)
+logger.info(`ENV_VARIABLES: ${JSON.stringify(EnvVariables)}`)
 
 if (EnvVariables.APPLICATIONINSIGHTS_CONNECTION_STRING) {
   logger.warn("APPINSIGHTS START")
@@ -36,5 +36,5 @@ if (EnvVariables.APPLICATIONINSIGHTS_CONNECTION_STRING) {
 }
 
 app.listen(EnvVariables.PORT, () => {
-  console.log(`START APLICATION - PORT: ${EnvVariables.PORT}`)
+  logger.info(`START APLICATION - PORT: ${EnvVariables.PORT}`)
 })
