@@ -17,23 +17,23 @@ export default class GeralReportController {
         const nameOfWeek = getDayOfTheWeek(new Date().getDay())
 
         if (dayOfWeek >= 1 && dayOfWeek <= 5) {
-          logger.info(`SCHEDULE START - ${nameOfWeek}`)
+          console.info(`SCHEDULE START - ${nameOfWeek}`)
           await geralReportUseCase.execute()
         } else {
-          logger.info(`REPORT IS NOT GENERATED ON ${nameOfWeek.toUpperCase()}`)
+          console.info(`REPORT IS NOT GENERATED ON ${nameOfWeek.toUpperCase()}`)
         }
       } catch (err) {
         if (err instanceof AxiosError && err.response) {
           const { status, statusText } = err.response
 
-          logger.error(
+          console.error(
             `SCHEDULE REPORT FAIL - ERR: ${JSON.stringify({
               statusCode: status,
               message: statusText,
             })}`,
           )
         } else {
-          logger.error(
+          console.error(
             `SCHEDULE REPORT FAIL - ERR: ${JSON.stringify(err.message)}`,
           )
         }

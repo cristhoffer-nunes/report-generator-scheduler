@@ -10,11 +10,11 @@ import {
 import logger from "./config/Logger"
 import EnvVariables from "./config/EnvVariable"
 
-logger.info(`NODE_ENV: ${EnvVariables.NODE_ENV}`)
-logger.info(`ENV_VARIABLES: ${JSON.stringify(EnvVariables)}`)
+console.info(`NODE_ENV: ${EnvVariables.NODE_ENV}`)
+console.info(`ENV_VARIABLES: ${JSON.stringify(EnvVariables)}`)
 
 if (EnvVariables.APPLICATIONINSIGHTS_CONNECTION_STRING) {
-  logger.warn("APPINSIGHTS START")
+  console.warn("APPINSIGHTS START")
   setup(EnvVariables.APPLICATIONINSIGHTS_CONNECTION_STRING)
     .setAutoCollectRequests(true)
     .setAutoCollectPerformance(true, true)
@@ -32,9 +32,9 @@ if (EnvVariables.APPLICATIONINSIGHTS_CONNECTION_STRING) {
     defaultClient.context.keys.cloudRole
   ] = `${EnvVariables.TAG}-UTILS-REPORT-SCHEDULER`
 } else {
-  logger.info("APPINSIGHTS STOPPED - NO APPINSIGHTS_IKEY")
+  console.info("APPINSIGHTS STOPPED - NO APPINSIGHTS_IKEY")
 }
 
 app.listen(EnvVariables.PORT, () => {
- logger.info(`START APLICATION - PORT: ${EnvVariables.PORT}`)
+ console.info(`START APLICATION - PORT: ${EnvVariables.PORT}`)
 })

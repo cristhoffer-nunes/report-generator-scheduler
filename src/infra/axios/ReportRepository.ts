@@ -119,7 +119,7 @@ export class ReportRepository implements IReportRepository {
   deleteFiles(): void {
     fs.readdir("files", (err, files) => {
       if (err) {
-        logger.error("Erro ao ler a pasta:", err)
+        console.error("Erro ao ler a pasta:", err)
         return
       }
 
@@ -130,9 +130,9 @@ export class ReportRepository implements IReportRepository {
         // Remove o arquivo
         fs.unlink(filePath, (err) => {
           if (err) {
-            logger.error(`Erro ao deletar o arquivo ${file}:`, err)
+            console.error(`Erro ao deletar o arquivo ${file}:`, err)
           } else {
-            logger.info(`Arquivo ${file} foi deletado com sucesso.`)
+            console.info(`Arquivo ${file} foi deletado com sucesso.`)
           }
         })
       })

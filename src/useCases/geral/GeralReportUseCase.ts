@@ -24,14 +24,14 @@ export class GeralReportUseCase {
       executions = Math.ceil(totalResults / limit)
     }
 
-    logger.info(
+    console.info(
       `NECESSARY EXECUTIONS: ${executions - 1} - NECESSARY OFFSET: ${
         (executions - 1) * limit
       }`,
     )
 
     for (let i = 0; i < executions; i++) {
-      logger.info(`EXECUTION: ${i} - OFFSET: ${offset}`)
+      console.info(`EXECUTION: ${i} - OFFSET: ${offset}`)
 
       const { items } = await this.reportRepository.getGeralOrders(offset)
       items.forEach((order) => {
@@ -42,10 +42,10 @@ export class GeralReportUseCase {
                 (reportObject) => reportObject.Pedido_OCC === order.id,
               )
 
-              logger.info(filtro)
+              console.info(filtro)
 
               if (filtro.length == 0) {
-                logger.info({
+                console.info({
                   order: order.id,
                   document: order.client_document,
                 })
@@ -73,15 +73,15 @@ export class GeralReportUseCase {
 
       offset = offset + 250
     }
-    logger.info("GENERATE REPORT - START")
+    console.info("GENERATE REPORT - START")
     await this.reportRepository.generateReport(report)
-    logger.info("GENERATE REPORT - SUCCESS")
+    console.info("GENERATE REPORT - SUCCESS")
 
-    logger.info("SEND EMAIL - START")
+    console.info("SEND EMAIL - START")
     await this.reportRepository.sendEmail()
-    logger.info("SEND EMAIL - SUCCESS")
+    console.info("SEND EMAIL - SUCCESS")
 
-    logger.info("DELETING FILES - START")
+    console.info("DELETING FILES - START")
     this.reportRepository.deleteFiles()
   }
 }
