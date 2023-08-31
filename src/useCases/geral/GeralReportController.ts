@@ -17,7 +17,7 @@ export default class GeralReportController {
         const nameOfWeek = getDayOfTheWeek(new Date().getDay())
 
         if (dayOfWeek >= 1 && dayOfWeek <= 5) {
-          console.log(`SCHEDULE START - ${nameOfWeek}`)
+          logger.info(`SCHEDULE START - ${nameOfWeek}`)
           await geralReportUseCase.execute()
         } else {
           logger.info(`REPORT IS NOT GENERATED ON ${nameOfWeek.toUpperCase()}`)
