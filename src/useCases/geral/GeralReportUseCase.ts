@@ -15,9 +15,9 @@ export class GeralReportUseCase {
     let executions: number
     const report: any[] = []
 
-    const { totalResults, limit } = await this.reportRepository.getGeralOrders({
-      offset: 0,
-    })
+    const { totalResults, limit } = await this.reportRepository.getGeralOrders(
+      offset,
+    )
 
     if (totalResults <= 250) {
       executions = 1
@@ -34,10 +34,9 @@ export class GeralReportUseCase {
     for (let i = 0; i < executions; i++) {
       logger.info(`EXECUTION: ${i} - OFFSET: ${offset}`)
 
-      const { items } = await this.reportRepository.getGeralOrders({
+      const { items } = await this.reportRepository.getGeralOrders(
         offset,
-      })
-
+      )
       items.forEach((order) => {
         order.commerceItems.forEach((product) => {
           product.priceInfo.orderDiscountInfos.forEach((item) => {
