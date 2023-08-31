@@ -36,5 +36,5 @@ if (EnvVariables.APPLICATIONINSIGHTS_CONNECTION_STRING) {
 }
 
 app.listen(EnvVariables.PORT, () => {
- console.info(`START APLICATION - PORT: ${EnvVariables.PORT}`)
+  console.info(`START APLICATION - PORT: ${EnvVariables.PORT}`)
 })

@@ -30,6 +30,18 @@ class App {
         })
       }
     })
+    this.express.get("/generate", async (request, response) => {
+      try {
+        await GeralReportController.manual()
+        response.json({
+          message: "Report generated and sended succesfully!",
+        })
+      } catch (err) {
+        return response.status(500).json({
+          messsage: err.message,
+        })
+      }
+    })
   }
 }
 

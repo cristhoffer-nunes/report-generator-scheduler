@@ -40,4 +40,30 @@ export default class GeralReportController {
       }
     })
   }
+
+  public static async manual() {
+    const geralReportUseCase = container.resolve(GeralReportUseCase)
+
+    try {
+      const nameOfWeek = getDayOfTheWeek(new Date().getDay())
+
+      console.info(`SCHEDULE START - ${nameOfWeek}`)
+      await geralReportUseCase.execute()
+    } catch (err) {
+      if (err instanceof AxiosError && err.response) {
+        const { status, statusText } = err.response
+
+        console.error(
+          `SCHEDULE REPORT FAIL - ERR: ${JSON.stringify({
+            statusCode: status,
+            message: statusText,
+          })}`,
+        )
+      } else {
+        console.error(
+          `SCHEDULE REPORT FAIL - ERR: ${JSON.stringify(err.message)}`,
+        )
+      }
+    }
+  }
 }
