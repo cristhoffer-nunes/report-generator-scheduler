@@ -15,9 +15,8 @@ export class GeralReportUseCase {
     let executions: number
     const report: any[] = []
 
-    const { totalResults, limit } = await this.reportRepository.getGeralOrders(
-      offset,
-    )
+    const { totalResults, limit } =
+      await this.reportRepository.getGeralOrders(offset)
 
     if (totalResults <= 250) {
       executions = 1
@@ -25,18 +24,16 @@ export class GeralReportUseCase {
       executions = Math.ceil(totalResults / limit)
     }
 
-    logger.info(
+    console.log(
       `NECESSARY EXECUTIONS: ${executions - 1} - NECESSARY OFFSET: ${
         (executions - 1) * limit
       }`,
     )
 
     for (let i = 0; i < executions; i++) {
-      logger.info(`EXECUTION: ${i} - OFFSET: ${offset}`)
+      console.log(`EXECUTION: ${i} - OFFSET: ${offset}`)
 
-      const { items } = await this.reportRepository.getGeralOrders(
-        offset,
-      )
+      const { items } = await this.reportRepository.getGeralOrders(offset)
       items.forEach((order) => {
         order.commerceItems.forEach((product) => {
           product.priceInfo.orderDiscountInfos.forEach((item) => {
@@ -76,15 +73,15 @@ export class GeralReportUseCase {
 
       offset = offset + 250
     }
-    logger.info("GENERATE REPORT - START")
+    console.log("GENERATE REPORT - START")
     await this.reportRepository.generateReport(report)
-    logger.info("GENERATE REPORT - SUCCESS")
+    console.log("GENERATE REPORT - SUCCESS")
 
-    logger.info("SEND EMAIL - START")
+    console.log("SEND EMAIL - START")
     await this.reportRepository.sendEmail()
-    logger.info("SEND EMAIL - SUCCESS")
+    console.log("SEND EMAIL - SUCCESS")
 
-    logger.info("DELETING FILES - START")
+    console.log("DELETING FILES - START")
     this.reportRepository.deleteFiles()
   }
 }
