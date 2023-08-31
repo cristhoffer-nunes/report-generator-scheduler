@@ -5,7 +5,7 @@ import EnvVariable from "../../config/EnvVariable"
 import fs from "fs"
 import path from "path"
 import { Orders } from "../entities/Orders"
-import { IReportDTO,IGetOrdersDTO } from "../../dtos"
+import { IReportDTO} from "../../dtos"
 import { OCCToken } from "../entities/Token"
 import { DateInformations } from "../../utils/DateInformations"
 import { IReportRepository } from "../../repositories/IReportRepository"
@@ -62,7 +62,7 @@ export class ReportRepository implements IReportRepository {
       return data
     }
   }
-  async getGeralOrders({ offset = 0 }: IGetOrdersDTO): Promise<Orders> {
+  async getGeralOrders(offset: number = 0): Promise<Orders> {
     const { data } = await axios.get(
       `${this.url}/ccapp/v1/orders?queryFormat=SCIM&fields=submittedDate,id,commerceItems.priceInfo.orderDiscountInfos,Pedido_SAP,client_document,priceInfo&q=submittedDate gt "2023-01-01T03:00:00.000Z" and submittedDate lt "${this.date}T03:00:00.000Z"&offset=${offset}`,
       {
