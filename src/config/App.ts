@@ -32,7 +32,7 @@ class App {
     })
     this.express.get("/generate", async (request, response) => {
       try {
-        await GeralReportController.manual()
+        GeralReportController.manual()
         response.json({
           message: "Report generated and sended succesfully!",
         })

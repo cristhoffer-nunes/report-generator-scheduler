@@ -42,13 +42,8 @@ export class GeralReportUseCase {
                 (reportObject) => reportObject.Pedido_OCC === order.id,
               )
 
-              console.info(filtro)
-
               if (filtro.length == 0) {
-                console.info({
-                  order: order.id,
-                  document: order.client_document,
-                })
+                
                 let payload: IReportDTO = {
                   Data_Pedido: order.submittedDate,
                   Pedido_OCC: order.id,
@@ -83,5 +78,6 @@ export class GeralReportUseCase {
 
     console.info("DELETING FILES - START")
     this.reportRepository.deleteFiles()
+    console.info("DELETING FILES - SUCCESS")
   }
 }
