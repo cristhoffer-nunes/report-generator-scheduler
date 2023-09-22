@@ -26,8 +26,9 @@ WORKDIR /app
 
 # Instale as dependências usando Yarn
 RUN yarn install
+RUN yarn build
 
-EXPOSE 3000
+EXPOSE ${PORT}
 
 # Inicie o aplicativo
-CMD ["yarn","dev"]
+CMD ["yarn","start"]
