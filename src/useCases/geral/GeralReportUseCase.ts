@@ -31,7 +31,7 @@ export class GeralReportUseCase {
     )
 
     for (let i = 0; i < executions; i++) {
-      logger.info(`EXECUTION: ${i} - OFFSET: ${offset}`)
+      logger.debug(`EXECUTION: ${i} - OFFSET: ${offset}`)
 
       const { items } = await this.reportRepository.getGeralOrders(offset)
       items.forEach((order) => {
@@ -42,13 +42,7 @@ export class GeralReportUseCase {
                 (reportObject) => reportObject.Pedido_OCC === order.id,
               )
 
-              logger.info(filtro)
-
               if (filtro.length == 0) {
-                logger.info({
-                  order: order.id,
-                  document: order.client_document,
-                })
                 let payload: IReportDTO = {
                   Data_Pedido: order.submittedDate,
                   Pedido_OCC: order.id,
@@ -83,5 +77,6 @@ export class GeralReportUseCase {
 
     logger.info("DELETING FILES - START")
     this.reportRepository.deleteFiles()
+    logger.info("DELETING FILES - SUCESS")
   }
 }

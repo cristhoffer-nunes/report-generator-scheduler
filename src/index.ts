@@ -30,9 +30,9 @@ if (EnvVariables.APPLICATIONINSIGHTS_CONNECTION_STRING) {
 
   defaultClient.context.tags[
     defaultClient.context.keys.cloudRole
-  ] = `${EnvVariables.TAG}-UTILS-REPORT-SCHEDULER`
+  ] = `${EnvVariables.TAG}-SUPPORT_SERVICES-REPORT-SCHEDULER`
 } else {
-  logger.info("APPINSIGHTS STOPPED - NO APPINSIGHTS_IKEY")
+  logger.warn("APPINSIGHTS STOPPED - NO APPINSIGHTS_IKEY")
 }
 
 app.listen(EnvVariables.PORT, () => {
