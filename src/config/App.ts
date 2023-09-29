@@ -30,6 +30,8 @@ class App {
         })
       }
     })
+
+    this.express.get("/manual", GeralReportController.manual)
   }
 }
 
