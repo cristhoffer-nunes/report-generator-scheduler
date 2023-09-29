@@ -31,7 +31,7 @@ export class GeralReportUseCase {
     )
 
     for (let i = 0; i < executions; i++) {
-      logger.debug(`EXECUTION: ${i} - OFFSET: ${offset}`)
+      logger.verbose(`EXECUTION: ${i} - OFFSET: ${offset}`)
 
       const { items } = await this.reportRepository.getGeralOrders(offset)
       items.forEach((order) => {
