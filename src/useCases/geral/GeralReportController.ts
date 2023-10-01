@@ -18,24 +18,28 @@ export default class GeralReportController {
         const nameOfWeek = getDayOfTheWeek(new Date().getDay())
 
         if (dayOfWeek >= 1 && dayOfWeek <= 5) {
-          logger.info(`SCHEDULE START - ${nameOfWeek}`)
+          logger.info(
+            `GeralReportController.load() - Schedule starting... - ${nameOfWeek}`,
+          )
           await geralReportUseCase.execute()
         } else {
-          logger.info(`REPORT IS NOT GENERATED ON ${nameOfWeek.toUpperCase()}`)
+          logger.info(
+            `GeralReportController.load() - Report is not generated on ${nameOfWeek.toUpperCase()}`,
+          )
         }
       } catch (err) {
         if (err instanceof AxiosError && err.response) {
           const { status, statusText } = err.response
 
           logger.error(
-            `SCHEDULE REPORT FAIL - ERR: ${JSON.stringify({
+            `GeralReportController.load() - Err: ${JSON.stringify({
               statusCode: status,
               message: statusText,
             })}`,
           )
         } else {
           logger.error(
-            `SCHEDULE REPORT FAIL - ERR: ${JSON.stringify(err.message)}`,
+            `GeralReportController.load - Err: ${JSON.stringify(err.message)}`,
           )
         }
       }
@@ -44,9 +48,12 @@ export default class GeralReportController {
 
   public static manual(request: Request, response: Response) {
     try {
+      const { date } = request.body
       const geralReportUseCase = container.resolve(GeralReportUseCase)
-      logger.info(`MANUAL REQUEST RECEIVED - STARTING...`)
-      geralReportUseCase.execute()
+      logger.info(
+        `GeralReportController.manual() - Manual request receveid and starting...`,
+      )
+      geralReportUseCase.executeManual(date)
 
       return response.json({ message: "Request received and processing..." })
     } catch (err) {
@@ -54,14 +61,16 @@ export default class GeralReportController {
         const { status, statusText } = err.response
 
         logger.error(
-          `SCHEDULE REPORT FAIL - ERR: ${JSON.stringify({
+          `GeralReportController.manual() - Err: ${JSON.stringify({
             statusCode: status,
             message: statusText,
           })}`,
         )
       } else {
         logger.error(
-          `SCHEDULE REPORT FAIL - ERR: ${JSON.stringify(err.message)}`,
+          `GeralReportController.manual() - Err: ${JSON.stringify(
+            err.message,
+          )}`,
         )
       }
     }

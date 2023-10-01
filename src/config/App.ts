@@ -31,7 +31,7 @@ class App {
       }
     })
 
-    this.express.get("/manual", GeralReportController.manual)
+    this.express.post("/manual", GeralReportController.manual)
   }
 }
 

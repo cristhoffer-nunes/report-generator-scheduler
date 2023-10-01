@@ -48,7 +48,7 @@ export class ReportRepository implements IReportRepository {
 
   async getToken(): Promise<OCCToken> {
     const { status, data } = await axios.post(
-      `${this.url}/ccapp/v1/login`,
+      `${this.url}/ccadmin/v1/login`,
       "grant_type=client_credentials",
       {
         headers: {
@@ -64,7 +64,7 @@ export class ReportRepository implements IReportRepository {
   }
   async getGeralOrders(offset: number = 0): Promise<Orders> {
     const { data } = await axios.get(
-      `${this.url}/ccapp/v1/orders?queryFormat=SCIM&fields=submittedDate,id,commerceItems.priceInfo.orderDiscountInfos,Pedido_SAP,client_document,priceInfo&q=submittedDate gt "2023-01-01T03:00:00.000Z" and submittedDate lt "${this.date}T03:00:00.000Z"&offset=${offset}`,
+      `${this.url}/ccadmin/v1/orders?queryFormat=SCIM&fields=submittedDate,id,commerceItems.priceInfo.orderDiscountInfos,Pedido_SAP,client_document,priceInfo&q=submittedDate gt "2023-01-01T03:00:00.000Z" and submittedDate lt "${this.date}T03:00:00.000Z"&offset=${offset}`,
       {
         headers: {
           Authorization: `Bearer ${await this.getCurrentToken()}`,
@@ -74,6 +74,23 @@ export class ReportRepository implements IReportRepository {
 
     return data
   }
+
+  async getGeralOrdersByDate(
+    offset: number = 0,
+    date: string,
+  ): Promise<Orders> {
+    const { data } = await axios.get(
+      `${this.url}/ccadmin/v1/orders?queryFormat=SCIM&fields=submittedDate,id,commerceItems.priceInfo.orderDiscountInfos,Pedido_SAP,client_document,priceInfo&q=submittedDate gt "2023-01-01T03:00:00.000Z" and submittedDate lt "${date}T03:00:00.000Z"&offset=${offset}`,
+      {
+        headers: {
+          Authorization: `Bearer ${await this.getCurrentToken()}`,
+        },
+      },
+    )
+
+    return data
+  }
+
   async generateReport(reportDTO: IReportDTO[]): Promise<void> {
     const worksheet = xlsx.utils.json_to_sheet(reportDTO)
     const workbook = xlsx.utils.book_new()
