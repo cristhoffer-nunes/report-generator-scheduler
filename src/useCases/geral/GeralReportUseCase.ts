@@ -2,6 +2,7 @@ import { ReportRepository } from "../../infra/axios/ReportRepository"
 import logger from "../../config/Logger"
 import { IReportDTO } from "../../dtos/IReportDTO"
 import { inject, injectable } from "tsyringe"
+import { DateInformations } from "../../utils/DateInformations"
 
 @injectable()
 export class GeralReportUseCase {
@@ -27,7 +28,7 @@ export class GeralReportUseCase {
     logger.info(
       `GeralReportUseCase.execute() - Executions: ${
         executions - 1
-      } - Offsets: ${(executions - 1) * limit}`,
+      } - Offsets: ${(executions - 1) * limit} - Date: ${DateInformations()}`,
     )
 
     for (let i = 0; i < executions; i++) {
@@ -98,7 +99,7 @@ export class GeralReportUseCase {
     logger.info(
       `GeralReportUseCase.executeManual() - Executions: ${
         executions - 1
-      } - Offsets: ${(executions - 1) * limit}`,
+      } - Offsets: ${(executions - 1) * limit} - Date: ${DateInformations()}`,
     )
 
     for (let i = 0; i < executions; i++) {
