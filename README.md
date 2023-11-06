@@ -12,7 +12,7 @@ The service is responsible for generating a daily report containing all orders w
 
 ## API Documentation
 
-#### Retorna todos os itens
+#### Trigger the automatic generation and sending of reports by e-mail.
 
 ```http
   POST /manual
